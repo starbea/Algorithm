@@ -7,25 +7,6 @@ class Main {
     static ArrayList<ArrayList<Integer>> graph;
     static int N;
     static StringBuilder sb;
-    
-    // static void dfs(int start) {
-    //     visited[start] = true;
-    //     Stack<Integer> stack = new Stack<>();
-    //     stack.push(start);
-    //     StringBuilder sb = new StringBuilder();
-
-    //     while(!stack.isEmpty()) {
-    //         int cur = stack.pop();
-    //         for(int n : graph.get(cur)) {
-    //             if(!visited[n]) {
-    //                 stack.push(n);
-    //                 visited[n] = true;
-    //                 sb.append(n).append(' ');
-    //             }
-    //         }
-    //     }
-    //     System.out.println(sb);
-    // }
 
     static void dfs(int start) {
         visited[start] = true;
