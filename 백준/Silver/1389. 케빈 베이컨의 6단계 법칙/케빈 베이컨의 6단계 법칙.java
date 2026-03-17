@@ -2,42 +2,36 @@ import java.io.*;
 import java.util.*;
 
 class Main {
-    static int N, M;
+    static int N;
     static boolean[] visited;
     static ArrayList<ArrayList<Integer>> graph;
-    static int min = Integer.MAX_VALUE;
-    static int result = 1;
 
-    static void bfs(int start) {
-        visited = new boolean[N + 1];
+    static int bfs(int start) {
+        boolean[] visited = new boolean[N + 1];
         int[] dist = new int[N + 1];
         Queue<Integer> queue = new LinkedList<>();
         
-        for(int n : graph.get(start)) {
-            queue.offer(n);
-            dist[n] = 1;
-        }
+        queue.offer(start);
+        visited[start] = true;
 
         while(!queue.isEmpty()) {
-            int cur = queue.poll();
+            int now = queue.poll();
 
-            for(int n : graph.get(cur)) {
-                if(dist[n] == 0) {
-                    dist[n] = dist[cur] + 1;
-                    queue.offer(n);
+            for(int next : graph.get(now)) {
+                if(!visited[next]) {
+                    dist[next] = dist[now] + 1;
+                    queue.offer(next);
+                    visited[next] = true;
                 }
             }
         }
-        dist[start] = 0;
-        
+
         int sum = 0;
         for(int i = 1; i <= N; i++) {
             sum += dist[i];
         }
-        if(sum < min) {
-            min = sum;
-            result = start;
-        }
+
+        return sum;
     }
 
 	public static void main(String args[]) throws Exception {
@@ -46,7 +40,7 @@ class Main {
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
         graph = new ArrayList<>();
         for(int i = 0; i <= N; i++) {
@@ -63,8 +57,15 @@ class Main {
             graph.get(b).add(a);
         }
 
+        int result = 0;
+        int min = Integer.MAX_VALUE;
         for(int i = 1; i <= N; i++) {
-            bfs(i);
+            int sum = bfs(i);
+
+            if(sum < min) {
+                min = sum;
+                result = i;
+            }
         }
      
         System.out.println(result);
